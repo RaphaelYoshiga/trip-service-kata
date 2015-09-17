@@ -31,12 +31,8 @@ namespace TripServiceKata.Tests
             var loggedUser = new User();
             _userSessionService.GetLoggedUser()
                 .Returns(loggedUser);
-            var friends = new List<User>() { 
-                loggedUser
-            };
             User user = new User();
             user.AddFriend(loggedUser);
-
             var dataAccessTrips = new List<Trip>();
             _tripDataAccess.FindTripsByUser(user)
                 .Returns(dataAccessTrips);
