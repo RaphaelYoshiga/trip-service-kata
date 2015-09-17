@@ -19,7 +19,6 @@ namespace TripServiceKata.Tests
         public TripServiceTest()
         {
             _userSessionService = Substitute.For<IUserSessionService>();
-            _userSessionService.GetInstance().Returns(_userSessionService);
 
             _tripDataAccess = Substitute.For<ITripDataAccess>();
             _tripService = new TripService(_userSessionService, _tripDataAccess);

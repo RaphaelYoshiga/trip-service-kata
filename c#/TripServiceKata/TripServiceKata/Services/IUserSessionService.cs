@@ -6,6 +6,5 @@ namespace TripServiceKata.Services
     {
         User GetLoggedUser();
         bool IsUserLoggedIn(User user);
-        IUserSessionService GetInstance();
     }
 }

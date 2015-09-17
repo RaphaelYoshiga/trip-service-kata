@@ -9,7 +9,7 @@ namespace TripServiceKata.Services
 
         private UserSessionService() { }
 
-        public IUserSessionService GetInstance()
+        public static IUserSessionService GetInstance()
         {
             return _userSessionService;
         }
