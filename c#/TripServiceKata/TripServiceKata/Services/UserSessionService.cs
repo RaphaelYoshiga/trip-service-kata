@@ -1,6 +1,7 @@
 ﻿using TripServiceKata.Exception;
+using TripServiceKata.Models;
 
-namespace TripServiceKata.User
+namespace TripServiceKata.Services
 {
     public class UserSessionService : IUserSessionService
     {

@@ -1,4 +1,4 @@
-﻿namespace TripServiceKata.Trip
+﻿namespace TripServiceKata.Models
 {
     public class Trip
     {

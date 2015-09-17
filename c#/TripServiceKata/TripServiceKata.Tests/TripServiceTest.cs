@@ -2,9 +2,10 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using TripServiceKata.Exception;
-using TripServiceKata.Trip;
-using TripServiceKata.User;
 using Shouldly;
+using TripServiceKata.Services;
+using TripServiceKata.DataAccess;
+using TripServiceKata.Models;
 
 namespace TripServiceKata.Tests
 {
@@ -27,16 +28,16 @@ namespace TripServiceKata.Tests
         [Test]
         public void Logged_User_Is_Friend_With_User_Should_Return_Dao_Result()
         {
-            var loggedUser = new User.User();
+            var loggedUser = new User();
             _userSessionService.GetLoggedUser()
                 .Returns(loggedUser);
-            var friends = new List<User.User>() { 
+            var friends = new List<User>() { 
                 loggedUser
             };
-            User.User user = new User.User();
+            User user = new User();
             user.AddFriend(loggedUser);
 
-            var dataAccessTrips = new List<Trip.Trip>();
+            var dataAccessTrips = new List<Trip>();
             _tripDataAccess.FindTripsByUser(user)
                 .Returns(dataAccessTrips);
 
@@ -50,10 +51,10 @@ namespace TripServiceKata.Tests
         [Test]
         public void Logged_User_Is_Not_Friend_With_User_Should_Not_Call_DataAccess()
         {
-            var loggedUser = new User.User();
+            var loggedUser = new User();
             _userSessionService.GetLoggedUser()
                 .Returns(loggedUser);
-            User.User user = new User.User();
+            var user = new User();
 
             // Act
             var tripsByUser = _tripService.GetTripsByUser(user);
@@ -61,14 +62,14 @@ namespace TripServiceKata.Tests
             // Assert
             _tripDataAccess.DidNotReceive().FindTripsByUser(user);
             tripsByUser.Count.ShouldBe(0);
-            
+
         }
 
         [Test]
         [ExpectedException(typeof(UserNotLoggedInException))]
         public void User_Not_Logged_Should_Throw_UserNotLoggedInException()
         {
-            User.User user = new User.User();
+            var user = new User();
             _userSessionService.GetLoggedUser()
                 .Returns(p => null);
 

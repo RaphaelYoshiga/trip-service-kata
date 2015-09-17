@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using TripServiceKata.DataAccess;
 using TripServiceKata.Exception;
-using TripServiceKata.User;
+using TripServiceKata.Models;
 
-namespace TripServiceKata.Trip
+
+namespace TripServiceKata.Services
 {
     public class TripService
     {
@@ -16,9 +18,9 @@ namespace TripServiceKata.Trip
             _tripDataAccess = tripDataAcess;
         }
 
-        public List<Trip> GetTripsByUser(User.User user)
+        public List<Trip> GetTripsByUser(User user)
         {
-            User.User loggedUser = _userSession.GetLoggedUser();
+            User loggedUser = _userSession.GetLoggedUser();
             if (loggedUser != null)
             {
                 var friends = user.GetFriends();

@@ -1,5 +1,6 @@
 ﻿using System;
-namespace TripServiceKata.User
+using TripServiceKata.Models;
+namespace TripServiceKata.Services
 {
     public interface IUserSessionService
     {
