@@ -2,15 +2,15 @@
 
 namespace TripServiceKata.User
 {
-    public class UserSession : IUserSession
+    public class UserSessionService : IUserSessionService
     {
-        private static readonly UserSession _userSession = new UserSession();
+        private static readonly UserSessionService _userSessionService = new UserSessionService();
 
-        private UserSession() { }
+        private UserSessionService() { }
 
-        public IUserSession GetInstance()
+        public IUserSessionService GetInstance()
         {
-            return _userSession;
+            return _userSessionService;
         }
 
         public bool IsUserLoggedIn(User user)

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 namespace TripServiceKata.Trip
 {
-    public interface ITripDAO
+    public interface ITripDataAccess
     {
         List<Trip> FindTripsByUser(User.User user);
     }

@@ -12,23 +12,23 @@ namespace TripServiceKata.Tests
     public class TripServiceTest
     {
         private TripService _tripService;
-        private IUserSession _userSession;
-        private ITripDAO _tripDao;
+        private IUserSessionService _userSessionService;
+        private ITripDataAccess _tripDataAccess;
 
         public TripServiceTest()
         {
-            _userSession = Substitute.For<IUserSession>();
-            _userSession.GetInstance().Returns(_userSession);
+            _userSessionService = Substitute.For<IUserSessionService>();
+            _userSessionService.GetInstance().Returns(_userSessionService);
 
-            _tripDao = Substitute.For<ITripDAO>();
-            _tripService = new TripService(_userSession, _tripDao);
+            _tripDataAccess = Substitute.For<ITripDataAccess>();
+            _tripService = new TripService(_userSessionService, _tripDataAccess);
         }
 
         [Test]
         public void Logged_User_Is_Friend_With_User_Should_Return_Dao_Result()
         {
             var loggedUser = new User.User();
-            _userSession.GetLoggedUser()
+            _userSessionService.GetLoggedUser()
                 .Returns(loggedUser);
             var friends = new List<User.User>() { 
                 loggedUser
@@ -37,7 +37,7 @@ namespace TripServiceKata.Tests
             user.AddFriend(loggedUser);
 
             var dataAccessTrips = new List<Trip.Trip>();
-            _tripDao.FindTripsByUser(user)
+            _tripDataAccess.FindTripsByUser(user)
                 .Returns(dataAccessTrips);
 
             // Act
@@ -51,7 +51,7 @@ namespace TripServiceKata.Tests
         public void Logged_User_Is_Not_Friend_With_User_Should_Not_Call_DataAccess()
         {
             var loggedUser = new User.User();
-            _userSession.GetLoggedUser()
+            _userSessionService.GetLoggedUser()
                 .Returns(loggedUser);
             User.User user = new User.User();
 
@@ -59,7 +59,7 @@ namespace TripServiceKata.Tests
             var tripsByUser = _tripService.GetTripsByUser(user);
 
             // Assert
-            _tripDao.DidNotReceive().FindTripsByUser(user);
+            _tripDataAccess.DidNotReceive().FindTripsByUser(user);
             tripsByUser.Count.ShouldBe(0);
             
         }
@@ -69,7 +69,7 @@ namespace TripServiceKata.Tests
         public void User_Not_Logged_Should_Throw_UserNotLoggedInException()
         {
             User.User user = new User.User();
-            _userSession.GetLoggedUser()
+            _userSessionService.GetLoggedUser()
                 .Returns(p => null);
 
             _tripService.GetTripsByUser(user);

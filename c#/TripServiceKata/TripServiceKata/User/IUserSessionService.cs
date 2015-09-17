@@ -1,10 +1,10 @@
 ﻿using System;
 namespace TripServiceKata.User
 {
-    public interface IUserSession
+    public interface IUserSessionService
     {
         User GetLoggedUser();
         bool IsUserLoggedIn(User user);
-        IUserSession GetInstance();
+        IUserSessionService GetInstance();
     }
 }
