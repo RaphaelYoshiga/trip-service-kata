@@ -13,29 +13,25 @@ namespace TripServiceKata.Tests
     public class TripServiceTest
     {
         private TripService _tripService;
-        private IUserSessionService _userSessionService;
+        private IUserService _userService;
         private ITripDataAccess _tripDataAccess;
 
         public TripServiceTest()
         {
-            _userSessionService = Substitute.For<IUserSessionService>();
-
+            _userService = Substitute.For<IUserService>();
             _tripDataAccess = Substitute.For<ITripDataAccess>();
-            _tripService = new TripService(_userSessionService, _tripDataAccess);
+            _tripService = new TripService(_userService, _tripDataAccess);
         }
 
         [Test]
-        public void Logged_User_Is_Friend_With_User_Should_Return_Dao_Result()
+        public void Logged_User_Is_Friend_With_User_Should_Call_DataAcess()
         {
-            var loggedUser = new User();
-            _userSessionService.GetLoggedUser()
-                .Returns(loggedUser);
             User user = new User();
-            user.AddFriend(loggedUser);
+            _userService.VerifyUserIsFriendWithLoggedUser(user)
+                .Returns(true);
             var dataAccessTrips = new List<Trip>();
             _tripDataAccess.FindTripsByUser(user)
                 .Returns(dataAccessTrips);
-
             // Act
             var tripsByUser = _tripService.GetTripsByUser(user);
 
@@ -46,10 +42,9 @@ namespace TripServiceKata.Tests
         [Test]
         public void Logged_User_Is_Not_Friend_With_User_Should_Not_Call_DataAccess()
         {
-            var loggedUser = new User();
-            _userSessionService.GetLoggedUser()
-                .Returns(loggedUser);
             var user = new User();
+            _userService.VerifyUserIsFriendWithLoggedUser(user)
+                .Returns(false);
 
             // Act
             var tripsByUser = _tripService.GetTripsByUser(user);
@@ -60,16 +55,6 @@ namespace TripServiceKata.Tests
 
         }
 
-        [Test]
-        [ExpectedException(typeof(UserNotLoggedInException))]
-        public void User_Not_Logged_Should_Throw_UserNotLoggedInException()
-        {
-            var user = new User();
-            _userSessionService.GetLoggedUser()
-                .Returns(p => null);
-
-            _tripService.GetTripsByUser(user);
-        }
 
 
 

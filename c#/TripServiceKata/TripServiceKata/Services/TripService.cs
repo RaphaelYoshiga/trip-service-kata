@@ -9,25 +9,22 @@ namespace TripServiceKata.Services
 {
     public class TripService
     {
-        private IUserSessionService _userSession;
+        private IUserService _userService;
         private ITripDataAccess _tripDataAccess;
 
-        public TripService(IUserSessionService userSessionService, ITripDataAccess tripDataAcess)
+        public TripService(IUserService userService, ITripDataAccess tripDataAcess)
         {
-            _userSession = userSessionService;
+            _userService = userService;
             _tripDataAccess = tripDataAcess;
         }
 
         public List<Trip> GetTripsByUser(User user)
         {
-            User loggedUser = _userSession.GetLoggedUser();
-            if (loggedUser == null)
-                throw new UserNotLoggedInException();
-
-            var friends = user.GetFriends();
-            bool isFriend = friends.Any(p => p == loggedUser);
+            bool isFriend = _userService.VerifyUserIsFriendWithLoggedUser(user);
             List<Trip> tripList = isFriend ? _tripDataAccess.FindTripsByUser(user) : new List<Trip>();
             return tripList;
         }
+
+
     }
 }

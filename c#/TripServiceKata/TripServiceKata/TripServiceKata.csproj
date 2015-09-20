@@ -45,9 +45,11 @@
     <Compile Include="DataAccess\ITripDataAccess.cs" />
     <Compile Include="Models\Trip.cs" />
     <Compile Include="DataAccess\TripDataAccess.cs" />
+    <Compile Include="Services\IUserService.cs" />
     <Compile Include="Services\TripService.cs" />
     <Compile Include="Services\IUserSessionService.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Services\UserService.cs" />
     <Compile Include="Services\UserSessionService.cs" />
   </ItemGroup>
   <ItemGroup />
