@@ -30,7 +30,7 @@ namespace TripServiceKata.Tests
             _userSessionService.GetLoggedUser()
                 .Returns(loggedUser);
             User user = new User();
-            user.AddFriend(loggedUser);
+            user.Friends.Add(loggedUser);
 
             // Act
             bool isUser = _userService.VerifyUserIsFriendWithLoggedUser(user);

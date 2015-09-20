@@ -22,7 +22,7 @@ namespace TripServiceKata.Services
             if (loggedUser == null)
                 throw new UserNotLoggedInException();
 
-            var friends = user.GetFriends();
+            var friends = user.Friends;
             bool isFriend = friends.Any(p => p == loggedUser);
             return isFriend;
         }

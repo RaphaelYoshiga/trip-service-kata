@@ -4,27 +4,14 @@ namespace TripServiceKata.Models
 {
     public class User
     {
-        private List<Trip> trips = new List<Trip>();
-        private List<User> friends = new List<User>();
+        public List<Trip> Trips { get; set; }
+        public List<User> Friends { get; set; }
 
-        public List<User> GetFriends()
+        public User()
         {
-            return friends;
-        } 
-
-        public void AddFriend(User user)
-        {
-            friends.Add(user);
+            Trips = new List<Trip>();
+            Friends = new List<User>();
         }
 
-        public void AddTrip(Trip trip)
-        {
-            trips.Add(trip);
-        }
-
-        public List<Trip> Trips()
-        {
-            return trips;
-        } 
     }
 }
