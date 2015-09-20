@@ -30,6 +30,7 @@ namespace TripServiceKata.Tests
             _userService.VerifyUserIsFriendWithLoggedUser(user)
                 .Returns(true);
             var dataAccessTrips = new List<Trip>();
+            dataAccessTrips.Add(new Trip());
             _tripDataAccess.FindTripsByUser(user)
                 .Returns(dataAccessTrips);
             // Act
