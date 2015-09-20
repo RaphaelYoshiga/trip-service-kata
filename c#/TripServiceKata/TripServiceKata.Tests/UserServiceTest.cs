@@ -52,7 +52,6 @@ namespace TripServiceKata.Tests
 
             // Assert
             isUser.ShouldBe(false);
-
         }
 
         [Test]
